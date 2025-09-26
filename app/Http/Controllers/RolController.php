@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rol;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class RolController extends Controller
@@ -12,7 +13,8 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        $roles=  Rol::included()->filter()->sort()->get();
+        return response() ->json($roles);
     }
 
     /**
@@ -28,7 +30,23 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nombre' => 'required|string|max:20|unique:rols,nombre'
+        ]);
+
+        $rol = Rol::create($data);
+
+        if(!$rol){
+            return response()->json([
+                'mensaje' => 'Error: rol no se ha creado correctamente'
+            ],400);
+        }
+        else{
+            return response()->json([
+                'mensaje'=> 'Rol creado con exito',
+                'rol' => $rol
+            ],201);
+        }
     }
 
     /**
@@ -36,7 +54,9 @@ class RolController extends Controller
      */
     public function show(Rol $rol)
     {
-        //
+        return response()->json([
+            'rol' => $rol
+        ]);
     }
 
     /**
@@ -52,7 +72,16 @@ class RolController extends Controller
      */
     public function update(Request $request, Rol $rol)
     {
-        //
+        $data = $request->validate([
+            'nombre' => 'required|string|max:20|unique:rols,nombre,'.$rol->id
+        ]);
+
+        $rol->update($data);
+
+        return response()->json([
+            'mensaje' => 'Rol actualizado con exito',
+            'rol' => $rol
+        ]);
     }
 
     /**
@@ -60,6 +89,9 @@ class RolController extends Controller
      */
     public function destroy(Rol $rol)
     {
-        //
+        $rol->delete();
+        return response()->json([
+            'mensaje' => 'Rol '.$rol->nombre.' eliminado con éxito'
+        ],200);
     }
 }

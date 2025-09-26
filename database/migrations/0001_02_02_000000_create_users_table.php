@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('primer_apellido',50);
             $table->string('segundo_apellido',50)->nullable();
             $table->string('telefono',10);
-            $table->string('estado_cuenta')->default('activa');
+            $table->boolean('estado_cuenta')->default(false);
             $table->string('correo')->unique();
-            $table->string('contraseña_hash');
+            $table->string('password');
             $table->string('cuenta_bancaria',30);  
             $table->rememberToken();
             $table->timestamps();
