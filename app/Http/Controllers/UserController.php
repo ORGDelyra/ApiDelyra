@@ -12,11 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::select('id','primer_nombre','id_rol')->with('rol:id,nombre')->get();     
-        return response()->json([
-            'users'=> $users
-        ]);
-
+        $users = User::included()->filter()->sort()->get();
+        return response()->json($users);
     }
 
     /**

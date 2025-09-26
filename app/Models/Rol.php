@@ -33,11 +33,12 @@ class Rol extends Model
     ];  
 
     public function scopeIncluded(Builder $query){
-        if(empty($this->allowInclude) || empty(request('include'))){
+        $param = request('included');
+        if(empty($this->allowInclude) || empty($param)){
             return $query;
         }
 
-        $relations = explode(',', request('include'));
+        $relations = explode(',', $param);
 
         $allowInclude = collect($this->allowInclude);
 
