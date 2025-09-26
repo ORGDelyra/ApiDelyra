@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('img_nit');
             $table->string('latitud')->nullable();
             $table->string('longitud')->nullable();
-            $table->string('direccion');
+            $table->string('direccion')->nullable();
             $table->timestamps();
         });
     }

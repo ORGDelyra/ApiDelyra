@@ -16,9 +16,7 @@ return new class extends Migration
             $table->foreignId('id_usuario')->nullable()
                     ->constrained('users')
                     ->onDelete('set null');
-            $table->foreignId('id_envio')
-                    ->constrained('shippings')
-                    ->onDelete('cascade');
+            $table->string('estado_dispo')->default('activo');
             $table->timestamps();
         });
     }

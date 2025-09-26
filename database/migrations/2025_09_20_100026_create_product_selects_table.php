@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('id_carrito')
                     ->constrained('carts')
                     ->onDelete('cascade');
-            $table->decimal('precio_unidad',10,2);
             $table->unsignedInteger('cantidad');
             $table->timestamps();
         });

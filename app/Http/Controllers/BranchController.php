@@ -12,7 +12,8 @@ class BranchController extends Controller
      */
     public function index()
     {
-        //
+        $branches = Branch::with('user')->get();
+        return response()->json($branches);
     }
 
     /**
@@ -28,7 +29,25 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nombre_sucursal'=> 'required|string|max:50',
+            'nit' => 'required|string',
+            'longitud' => 'required|string',
+            'latitud' => 'required|string',
+            'direccion' => 'required|string'
+        ]);
+
+        $branch = Branch::create($data);
+        if(!$branch){
+            return response()->json([
+                'mensaje' => 'Error: no se ha podido crear la sucursal'
+            ],400);
+        }else{
+        return response()->json([
+            'mensaje' => 'Sucursal creada con exito',
+            'sucursal' => $branch->nombre_sucursal
+        ],201);            
+        }
     }
 
     /**
