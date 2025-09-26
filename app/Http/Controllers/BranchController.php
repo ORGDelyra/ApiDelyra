@@ -48,7 +48,6 @@ class BranchController extends Controller
             'sucursal' => $branch->nombre_sucursal
         ],201);            
         }
-    }
 
     /**
      * Display the specified resource.

@@ -14,7 +14,6 @@ class RolController extends Controller
     public function index()
     {
         $roles=  Rol::included()->filter()->sort()->get();
-
         return response() ->json($roles);
     }
 
